@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgers:postgres@db:5432/appdb"
+    "postgresql://postgres:postgres@db:5432/appdb"
 )
 
 engine = create_engine(DATABASE_URL)
