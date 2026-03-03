@@ -29,7 +29,7 @@ export default function ChatPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100">
+    <main className="flex min-h-screen items-center justify-center bg-gray-100 text-black">
       <div className="bg-white p-8 rounded-xl shadow-lg w-[500px]">
         <h1 className="text-2xl font-bold mb-6 text-center">AI Chat</h1>
 

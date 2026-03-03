@@ -1,9 +1,11 @@
 "use client"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const router = useRouter()
 
   const handleLogin = async () => {
     const formData = new URLSearchParams()
@@ -22,14 +24,14 @@ export default function LoginPage() {
 
     if (response.ok) {
       localStorage.setItem("token", data.access_token)
-      alert("Zalogowano!")
+      router.push("/chat")
     } else {
       alert("Błąd logowania")
     }
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100">
+    <main className="flex min-h-screen items-center justify-center bg-gray-100 text-black">
       <div className="bg-white p-8 rounded-xl shadow-lg w-80">
         <h1 className="text-2xl font-bold mb-6 text-center">Logowanie</h1>
 
