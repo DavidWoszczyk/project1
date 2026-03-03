@@ -24,14 +24,17 @@ def chat(prompt: str, current_user = Depends(get_current_user)):
         "response": response.choices[0].message.content
     }
 @router.post("/summarize", response_model=schemas.AIRequestResponse)
-def summarize(request: schemas.AIRequestCreate, db: Session = Depends(get_db)):
+def summarize(request: schemas.AIRequestCreate,
+              db: Session = Depends(get_db),
+              current_user: models.User = Depends(get_current_user)
+              ):
 
     output = summarize_text(request.text)
 
     db_request = models.AIRequest(
         input_text=request.text,
         output_text=output,
-        user_id=request.user_id
+        user_id=current_user.id
     )
     db.add(db_request)
     db.commit()
@@ -39,6 +42,7 @@ def summarize(request: schemas.AIRequestCreate, db: Session = Depends(get_db)):
 
     return db_request
 
-@router.get("/", response_model=list[schemas.UserResponse])
-def get_users(db: Session = Depends(get_db)):
-    return db.query(models.User).all()
+@router.get("/me", response_model=schemas.UserResponse)
+def get_me(current_user: models.User = Depends(get_current_user)):
+    return current_user
+

@@ -23,7 +23,6 @@ class AIRequestResponse(BaseModel):
     input_text: str
     output_text: str
     created_at: datetime
-    user_id: int
 
     class Config:
         from_attributes = True
