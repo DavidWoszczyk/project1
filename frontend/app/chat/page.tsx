@@ -6,7 +6,7 @@ export default function ChatPage() {
   const [message, setMessage] = useState("")
   const [response, setResponse] = useState("")
   const router = useRouter()
-
+    const [loading, setLoading] = useState(false)
   useEffect(() => {
     const token = localStorage.getItem("token")
     if (!token) {
@@ -15,45 +15,58 @@ export default function ChatPage() {
   }, [])
 
   const handleSend = async () => {
-    const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token")
 
-    const res = await fetch("http://localhost:8000/ai/chat?prompt=" + message, {
+  if (!token) {
+    router.push("/login")
+    return
+  }
+
+  setLoading(true)
+
+  const res = await fetch(
+    "http://localhost:8000/ai/chat?prompt=" + message,
+    {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`
       }
-    })
+    }
+  )
 
-    const data = await res.json()
-    setResponse(data.response)
-  }
+  const data = await res.json()
+
+  setResponse(data.response)
+  setLoading(false)
+}
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100 text-black">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-[500px]">
-        <h1 className="text-2xl font-bold mb-6 text-center">AI Chat</h1>
+      <div className="bg-white rounded-xl shadow-lg p-6">
+    <h2 className="text-2xl font-semibold mb-6">AI Assistant</h2>
 
-        <textarea
-          className="w-full p-2 border rounded mb-4"
-          rows={4}
-          placeholder="Napisz coś..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+    <textarea
+      className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      rows={4}
+      placeholder="Ask something..."
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+    />
 
-        <button
-          onClick={handleSend}
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 mb-4"
-        >
-          Wyślij
-        </button>
+    <button
+      onClick={handleSend}
+      disabled={loading}
+      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+    >
+    {loading ? "Thinking..." : "Send"}
+    </button>
 
-        {response && (
-          <div className="bg-gray-100 p-4 rounded">
-            {response}
-          </div>
-        )}
+    {response && (
+      <div className="mt-6 bg-gray-50 border rounded-lg p-4">
+        <p className="text-gray-800 whitespace-pre-line">{response}</p>
       </div>
+    )}
+  </div>
     </main>
   )
 }
