@@ -24,7 +24,7 @@ export default function LoginPage() {
 
     if (response.ok) {
       localStorage.setItem("token", data.access_token)
-      router.push("/chat")
+      router.push("/dashboard")
     } else {
       alert("Błąd logowania")
     }
