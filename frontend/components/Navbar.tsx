@@ -44,7 +44,8 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-sm border-b">
       <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="/" className="font-bold text-xl text-black">
+        <a href={user ? "/dashboard": "/"}
+        className="font-bold text-xl text-black">
           AI Backend Pro
         </a>
 

@@ -23,8 +23,8 @@ export default function LoginPage() {
     const data = await response.json()
 
     if (response.ok) {
-      localStorage.setItem("token", data.access_token)
-      router.push("/dashboard")
+      localStorage.setItem("token", data.access_token),
+      window.location.href = "/dashboard"
     } else {
       alert("Błąd logowania")
     }
