@@ -13,7 +13,7 @@ export default function Chat() {
 
     setLoading(true)
 
-    const res = await fetch("http://localhost:8000/ai/chat", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/chat`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",

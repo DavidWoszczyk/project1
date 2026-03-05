@@ -15,7 +15,7 @@ export default function Navbar() {
       return
     }
 
-    fetch("http://localhost:8000/ai/me", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/me`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

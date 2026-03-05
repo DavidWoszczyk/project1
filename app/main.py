@@ -3,6 +3,8 @@ from .database import engine, Base
 from .routers import users, ai
 from fastapi.middleware.cors import CORSMiddleware
 
+
+
 app = FastAPI()
 @app.get("/")
 def root():
@@ -10,6 +12,11 @@ def root():
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI(title="AI Backend Pro")
+
+origins = [
+    "http://localhost:3000",
+    "https://project1-1-mk3a.onrender.com"
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],

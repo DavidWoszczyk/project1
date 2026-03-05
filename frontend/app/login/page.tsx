@@ -12,7 +12,7 @@ export default function LoginPage() {
     formData.append("username", email)
     formData.append("password", password)
 
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
       method: "POST",
       body: formData,
       headers: {

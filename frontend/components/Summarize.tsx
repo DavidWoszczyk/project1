@@ -13,7 +13,7 @@ export default function Summarize() {
 
     setLoading(true)
 
-    const res = await fetch("http://localhost:8000/ai/summarize", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/summarize`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
