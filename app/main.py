@@ -3,6 +3,10 @@ from .database import engine, Base
 from .routers import users, ai
 from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
+@app.get("/")
+def root():
+    return {"message": "AI Backend Pro API is running"}
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI(title="AI Backend Pro")
