@@ -1,7 +1,8 @@
+
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center h-[70vh] text-center">
-      <h1 className="text-4xl font-bold text-black mb-6">
+      <h1 className="text-4xl font-bold text-white mb-6">
         AI Backend Pro
       </h1>
 

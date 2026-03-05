@@ -16,28 +16,30 @@ export default function ChatPage() {
 
   const handleSend = async () => {
   const token = localStorage.getItem("token")
-
-  if (!token) {
-    router.push("/login")
-    return
-  }
-
-  setLoading(true)
-
-  const res = await fetch(
-    "http://localhost:8000/ai/chat?prompt=" + message,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`
+  if (!token){
+      console.log("No token")
+      return
       }
-    }
-  )
 
+  const res = await fetch("http://localhost:8000/ai/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      input_text: message
+    })
+  })
+    console.log("Status:", res.status)
   const data = await res.json()
+  console.log(data)
+  setResponse(data.output_text)
 
-  setResponse(data.response)
+  setMessage("")
   setLoading(false)
+
+  window.dispatchEvent(new Event("historyUpdated"))
 }
 
   return (

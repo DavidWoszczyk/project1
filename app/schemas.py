@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
 class UserCreate(BaseModel):
-    email: str
+    email: EmailStr
     password: str
 
 class UserResponse(BaseModel):
@@ -15,8 +15,7 @@ class UserResponse(BaseModel):
     }
 
 class AIRequestCreate(BaseModel):
-    text: str
-    user_id: int
+    input_text: str
 
 class AIRequestResponse(BaseModel):
     id: int

@@ -13,25 +13,28 @@ export default function Chat() {
 
     setLoading(true)
 
-    const res = await fetch(
-      "http://localhost:8000/ai/chat?prompt=" + message,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
+    const res = await fetch("http://localhost:8000/ai/chat", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+              },
+          body: JSON.stringify({
+              input_text: message
+              })
+          })
+      const data = await res.json()
+      setResponse(data.output_text)
 
-    const data = await res.json()
-    setResponse(data.response)
-    setLoading(false)
-  }
+      setMessage("")
+      setLoading(false)
 
+     window.dispatchEvent(new Event("historyUpdated"))
+}
   return (
     <div>
       <textarea
-        className="w-full border rounded-lg p-3 mb-4"
+        className="w-full border rounded-lg p-3 mb-4 text-black"
         rows={4}
         placeholder="Ask something..."
         value={message}
@@ -47,7 +50,7 @@ export default function Chat() {
 
       {response && (
         <div className="mt-6 bg-gray-50 border rounded-lg p-4">
-          <p className="whitespace-pre-line">{response}</p>
+          <p className="whitespace-pre-line text-gray-900">{response}</p>
         </div>
       )}
     </div>

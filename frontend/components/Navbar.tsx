@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function Navbar() {
   const [user, setUser] = useState<any>(null)
@@ -53,10 +54,10 @@ export default function Navbar() {
           {!user ? (
             <>
               <a href="/login" className="hover:text-blue-600">
-                Login
+
               </a>
               <a href="/register" className="hover:text-blue-600">
-                Register
+
               </a>
             </>
           ) : (

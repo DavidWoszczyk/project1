@@ -9,33 +9,55 @@ from openai import OpenAI
 import os
 router = APIRouter(prefix="/ai", tags=["AI"])
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-@router.post("/chat")
-def chat(prompt: str, current_user = Depends(get_current_user)):
+@router.post("/chat", response_model=schemas.AIRequestResponse)
+def chat(
+    request: schemas.AIRequestCreate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a helpful assistant"},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": request.input_text}
         ]
     )
-    return {
-        "user_id": current_user.id,
-        "response": response.choices[0].message.content
-    }
-@router.post("/summarize", response_model=schemas.AIRequestResponse)
-def summarize(request: schemas.AIRequestCreate,
-              db: Session = Depends(get_db),
-              current_user: models.User = Depends(get_current_user)
-              ):
 
-    output = summarize_text(request.text)
+    output_text = response.choices[0].message.content
 
     db_request = models.AIRequest(
-        input_text=request.text,
-        output_text=output,
+        input_text=request.input_text,
+        output_text=output_text,
         user_id=current_user.id
     )
+
+    db.add(db_request)
+    db.commit()
+    db.refresh(db_request)
+
+    return db_request
+@router.post("/summarize", response_model=schemas.AIRequestResponse)
+def summarize(
+    request: schemas.AIRequestCreate,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "Summarize the following text"},
+            {"role": "user", "content": request.input_text}
+        ]
+    )
+
+    output_text = response.choices[0].message.content
+
+    db_request = models.AIRequest(
+        input_text=request.input_text,
+        output_text=output_text,
+        user_id=current_user.id
+    )
+
     db.add(db_request)
     db.commit()
     db.refresh(db_request)
@@ -46,3 +68,15 @@ def summarize(request: schemas.AIRequestCreate,
 def get_me(current_user: models.User = Depends(get_current_user)):
     return current_user
 
+@router.get("/history", response_model=list[schemas.AIRequestResponse])
+def get_history(
+        db: Session = Depends(get_db),
+        current_user: models.User = Depends(get_current_user)
+):
+    return  (
+
+        db.query(models.AIRequest)
+        .filter(models.AIRequest.user_id==current_user.id)
+        .order_by(models.AIRequest.id.desc())
+        .all()
+    )
