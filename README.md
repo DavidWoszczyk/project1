@@ -2,7 +2,7 @@
 
 #Full-stack AI application with authentication, chat and text summarization.
 
-# Live Demo
+# Links
 
 Frontend: 
 https://project1-1-mk3a.onrender.com
@@ -66,3 +66,12 @@ docker compose up --build
 Frontend:
 npm install
 npm run dev
+
+# Screeshots
+![Home Page](screenshots/main.png)
+![Register](screenshots/register.png)
+![Login](screenshots/login.png)
+![Dashboard](screenshots/dashboard.png)
+![Chat](screenshots/chat.png)
+![Summarize](screenshots/summarize.png)
+![History](screenshots/history.png)
