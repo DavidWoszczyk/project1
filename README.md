@@ -1,7 +1,6 @@
 # AI Backend PRO
 
-This project is a full-stack web application that allows users to create and manage their personal tasks through a web interface.
-The application was built to demonstrate backend development skills including API design, authentication, database management and cloud deployment.
+Full-stack task management web application built with Python, FastAPI, PostgreSQL and Next.js. Includes JWT authentication and REST API.
 
 # Links
 
