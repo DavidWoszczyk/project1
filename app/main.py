@@ -5,10 +5,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 
-app = FastAPI()
+app = FastAPI(title="AI Backend Pro")
 
 Base.metadata.create_all(bind=engine)
-app = FastAPI(title="AI Backend Pro")
+
 
 origins = [
     "http://localhost:3000",
@@ -16,7 +16,7 @@ origins = [
 ]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
