@@ -1,6 +1,7 @@
 # AI Backend PRO
 
-#Full-stack AI application with authentication, chat and text summarization.
+This project is a full-stack web application that allows users to create and manage their personal tasks through a web interface.
+The application was built to demonstrate backend development skills including API design, authentication, database management and cloud deployment.
 
 # Links
 
@@ -22,12 +23,26 @@ First request may take around 30-60 seconds due to cold start.
 
 # Features
 - User registration
-- User authentication (JSON Web Token)
+  New users can create an account by providing basics credentials,
+  the system validates input and stores user data scurely in the database.
+- User authentication (JWT)
+  Users can log in using their credentials, authentication is handled using JSON Web Token,
+  which allow secure communication between the frontend and backend API.
 - AI chat powered by OPENAI
 - Tet summarization
 - Chat and summarization history per user
 - Secure backend API
 - Cloud deployment
+
+# How it works
+
+- A user opens the web application.
+- User registers a new account or logs in.
+- After authentication, user gains access to their personal dashboard.
+- User can create two tasks.
+- All operations are sent to the backend API.
+- Backend processes the request and updates the PostgreSQL database.
+- Frontend displays updated data to the user. 
 
 # Tech Stack
 Frontend:
