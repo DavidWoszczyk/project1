@@ -55,6 +55,7 @@ Infrastructure:
 #Architecture
 
 User -> Next.js Frontend -> FastAPI Backend -> PostgreSQL -> OpenAI API
+Deployment: Render Cloud
 
 # Run locally:
 
